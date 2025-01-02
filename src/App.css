@@ -5,11 +5,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.App {
+.app {
   text-align: center;
 }
 
-.App-logo {
+.app-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -20,7 +20,7 @@ body {
   }
 }
 
-.App-header {
+.app-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;

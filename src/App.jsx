@@ -1,10 +1,17 @@
-import './App.css';
+import './app.css';
+import Bebras from './Bebras';
+
+function Zebras() {
+  return <h2>Zebras</h2>
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="app">
+      <header className="app-header">
         <h1>React v18</h1>
+        <Bebras/>
+        <Zebras/>
       </header>
     </div>
   );
