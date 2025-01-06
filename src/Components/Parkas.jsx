@@ -1,11 +1,11 @@
 export default function Parkas({ koks }) {
- 
+
     if (koks === 1) {
         return (
             <h1>Didelis parkas</h1>
         );
     }
- 
+
     if (koks === 2) {
         return (
             <>
@@ -15,7 +15,7 @@ export default function Parkas({ koks }) {
             </>
         );
     }
- 
+
     if (koks === 3) {
         return (
             <ul>
@@ -27,5 +27,5 @@ export default function Parkas({ koks }) {
     }
 
     return null;
- 
+
 }
