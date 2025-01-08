@@ -41,3 +41,18 @@ body {
     transform: rotate(360deg);
   }
 }
+
+input {
+  margin: 20px;
+  font-size: 20px;
+  outline: none;
+  background-color: transparent;
+  border: 1px solid white;
+  padding: 5px 10px;
+  color: white;
+}
+
+input.green {
+  border: 1px solid #80CFA9;
+  color: #80CFA9;
+}
