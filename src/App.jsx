@@ -1,5 +1,6 @@
 import './app.css';
 import './buttons.scss';
+import Checkbox from './Components/044/Checkbox';
 import Mygtukai from './Components/044/Mygtukai';
 import Select from './Components/044/Select';
 import Text from './Components/044/Text';
@@ -15,6 +16,8 @@ function App() {
                 <Text />
 
                 <Select />
+
+                <Checkbox />
 
             </header>
         </div>
