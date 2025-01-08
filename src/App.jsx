@@ -1,6 +1,7 @@
 import './app.css';
 import './buttons.scss';
 import Mygtukai from './Components/044/Mygtukai';
+import Select from './Components/044/Select';
 import Text from './Components/044/Text';
 
 function App() {
@@ -12,6 +13,8 @@ function App() {
                 <Mygtukai />
 
                 <Text />
+
+                <Select />
 
             </header>
         </div>

@@ -42,7 +42,7 @@ body {
   }
 }
 
-input {
+input, select {
   margin: 20px;
   font-size: 20px;
   outline: none;
@@ -55,4 +55,9 @@ input {
 input.green {
   border: 1px solid #80CFA9;
   color: #80CFA9;
+}
+
+select {
+  border: 1px solid #F18F01;
+  color: #F18F01;
 }
