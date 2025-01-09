@@ -1,6 +1,7 @@
 import './app.css';
 import './buttons.scss';
 import List from './Components/045/List';
+import Sq from './Components/045/Sq';
 
 function App() {
 
@@ -9,7 +10,9 @@ function App() {
         <div className="app">
             <header className="app-header">
                 
-                <List />
+                {/* <List /> */}
+
+                <Sq />
 
             </header>
         </div>
