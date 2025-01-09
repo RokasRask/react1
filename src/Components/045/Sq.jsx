@@ -1,6 +1,8 @@
-import { useState } from "react"
-import rand from '../../Functions/rand'
+import { useState } from "react";
+import rand from '../../Functions/rand';
 import randomColor from "../../Functions/randomColor";
+import { v4 as uuidv4 } from 'uuid';
+import OneSq from "./OneSq";
 
 export default function Sq() {
 
@@ -11,7 +13,8 @@ export default function Sq() {
             number: rand(100, 999),
             color: randomColor(),
             show: true,
-            row: s.length
+            row: s.length,
+            id: uuidv4()
         }
         ]);
     }
@@ -32,21 +35,23 @@ export default function Sq() {
         setSq(s => s.toSorted((a, b) => a.row - b.row));
     }
 
+    const hide = id => {
+        setSq(s => s.map(sq => sq.id === id ? {...sq, show: false} : sq))
+    }
+
+    const makeWhite = id => {
+        setSq(s => s.map(sq => sq.id === id && !sq.copy ? {...sq, copy: sq.color, color: '#ffffff' } : sq))
+    }
+
+    const originalColor = _ => {
+        setSq(s => s.map(sq => sq.copy ? {...sq, color: sq.copy, copy: null} : sq))
+    }
+
     return (
         <>
             <div className="sq-bin">
                 {
-                    sq.map((sq, index) => sq.show ? (
-                        <div
-                            key={index}
-                            style={{
-                                backgroundColor: sq.color + '33',
-                                borderColor: sq.color
-                            }}
-                            className="sq"
-                        >
-                            {sq.number}
-                        </div>) : null)
+                    sq.map(sq => sq.show ? <OneSq key={sq.id} sq={sq} hide={hide} makeWhite={makeWhite} /> : null )
                 }
             </div>
             <button className="red" onClick={addSq}>Add</button>
@@ -54,6 +59,7 @@ export default function Sq() {
             <button className="yellow" onClick={filter500}>Filter 500 or more</button>
             <button className="green" onClick={showAll}>Show all</button>
             <button className="green" onClick={sortDefault}>SORT default</button>
+            <button className="green" onClick={originalColor}>Original color</button>
         </>
     )
 }
