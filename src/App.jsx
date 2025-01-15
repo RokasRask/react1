@@ -1,69 +1,66 @@
 import './app.css';
 import './buttons.scss';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import rand from './Functions/rand.js';
 import Square from './Components/048/Square';
 import randomColor from './Functions/randomColor.js';
 
-function App() {
+export default function App() {
+   
 
     const [sq, setSq] = useState([]);
     const [buttonDisabled, setButtonDisabled] = useState(false);
+    const [count, setCount] = useState(1);
 
-    const disableEnableButton = (d) => {
+    const disableEnableButton = useCallback(d => {
         setButtonDisabled(d);
-    };
+    }, [setButtonDisabled]);
 
-    useEffect(() => {
+    useEffect(_ => {
+        console.log('App komponentas');
+    }, [count]);
+
+    useEffect(_ => {
         if (sq.length >= 5) {
-            console.log('Per daug kvadratų');
+            console.log('Per daug kvadratu');
             disableEnableButton(true);
         } else {
-            disableEnableButton(false);
+            setButtonDisabled(false);
         }
-    }, [sq]);
 
-    const addSq = () => {
-        setSq((s) => [
-            ...s,
-            {
-                id: Date.now(),
-                number: rand(1000, 9999),
-                color: randomColor(),
-            },
-        ]);
-    };
+    }, [sq, disableEnableButton, setButtonDisabled]);
 
-    const deleteSq = (id) => {
-        setSq((s) => s.filter((sq) => sq.id !== id));
-    };
+    const addSq = _ => {
+        setSq(s => [...s, {
+            id: Date.now(),
+            number: rand(1000, 9999),
+            color: randomColor()
+        }]);
+    }
 
-    const changeSqColor = (id) => {
-        setSq((s) => s.map((sq) => 
-            sq.id === id ? { ...sq, color: randomColor() } : sq
-        ));
-    };
+    const deleteSq = id => {
+        setSq(s => s.filter(sq => sq.id !== id));
+    }
 
-    const clearAllSquares = () => {
-        setSq([]);
-    };
+    const changeColor = id => {
+        setSq(s => s.map(sq => sq.id === id ? { ...sq, color: randomColor() } : sq));
+    }
+
 
     return (
         <div className="app">
             <header className="app-header">
-                <div className='sq-bin'>
+                <h1>{count}</h1>
+                <div className="sq-bin">
                     {
-                        sq.map((s) => (
-                            <Square key={s.id} sq={s} deleteSq={deleteSq} changeSqColor={changeSqColor} />
-                        ))
+                        sq.map(s => <Square key={s.id} sq={s} deleteSq={deleteSq}  changeColor={changeColor} />)
                     }
                 </div>
+                <button onClick={addSq} className="yellow" disabled={buttonDisabled}>ADD</button>
+                <button onClick={_ => setSq([])} className="red">DELETE ALL</button>
+                <button onClick={_ => setCount(c => c + 1)}>+1</button>
 
-                <button className='yellow' onClick={addSq} disabled={buttonDisabled}>ADD</button>
-                <button className='red' onClick={clearAllSquares}>CLEAR ALL</button>
             </header>
         </div>
     );
 }
-
-export default App;
