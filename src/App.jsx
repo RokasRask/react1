@@ -1,4 +1,3 @@
-import './buttons.scss';
 import './crud.scss';
 import Create from './Components/crud/Create';
 
