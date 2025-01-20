@@ -1,10 +1,13 @@
 import { useState } from 'react';
-import { STATES } from '../../Constants/crud.js'
+import { STATES } from '../../Constants/crud';
+
+const defaultPlanetData = { 'name': '', 'state': -1, 'size': 0 };
+const defaultSatellites = [''];
 
 export default function Create({ setStoreData }) {
 
-    const [satellites, setSatellites] = useState(['']);
-    const [planetData, setPlanetData] = useState({ 'name': '', 'state': -1, 'size': 0 });
+    const [satellites, setSatellites] = useState(defaultSatellites);
+    const [planetData, setPlanetData] = useState(defaultPlanetData);
 
     const addSatellite = _ => {
         setSatellites(s => [...s, '']);
@@ -19,19 +22,23 @@ export default function Create({ setStoreData }) {
     }
 
     const submitData = _ => {
-        const data = {
+        const data = { 
             satellites,
             name: planetData.name,
             state: planetData.state,
             size: parseFloat(planetData.size)
          };
         setStoreData(data);
+        setSatellites(defaultSatellites);
+        setPlanetData(defaultPlanetData);
     }
+
 
     return (
         <div className="container">
             <div className="row">
                 <div className="col-12">
+
                     <div className="card mt-5">
                         <div className="card-header">
                             <h2>Add new planet</h2>
@@ -47,19 +54,19 @@ export default function Create({ setStoreData }) {
                                 />
                             </div>
                             <div className="mb-3 states-cb">
-                                <input type="checkbox" id='create-state-0'
+                                <input type="checkbox" id="create-state-0"
                                     checked={planetData.state === 0}
                                     onChange={_ => setPlanetData(p => ({ ...p, state: 0 }))}
                                 />
                                 <label className="form-label" htmlFor="create-state-0">{STATES[0]}</label>
-                                <input type="checkbox" id='create-state-1'
+                                <input type="checkbox" id="create-state-1"
                                     checked={planetData.state === 1}
                                     onChange={_ => setPlanetData(p => ({ ...p, state: 1 }))}
                                 />
                                 <label className="form-label" htmlFor="create-state-1">{STATES[1]}</label>
                             </div>
                             <div className="mb-3">
-                                <label className="form-label">Planet size, km</label>
+                                <label className="form-label">Planet size km</label>
                                 <input type="text" className="form-control"
                                     value={planetData.size}
                                     onChange={e => setPlanetData(p => ({ ...p, size: e.target.value }))}
@@ -69,7 +76,6 @@ export default function Create({ setStoreData }) {
                                 <label className="form-label">Planet satellites</label>
                                 {
                                     satellites.map((satellite, index) =>
-
                                         <div className="mb-1" key={index}>
                                             <div className="satellite">
                                                 <input type="text" className="form-control"
@@ -81,12 +87,13 @@ export default function Create({ setStoreData }) {
                                     )
                                 }
                                 <div className="mb-3">
-                                    <button className='green' onClick={addSatellite}>+</button>
+                                    <button className="green" onClick={addSatellite}>+</button>
                                 </div>
                             </div>
-                            <button className='yellow' onClick={submitData}>Add planet</button>
+                            <button className="yellow" onClick={submitData}>Add planet</button>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
