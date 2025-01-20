@@ -1,6 +1,8 @@
 import './crud.scss';
+import axios from 'axios';
 import Create from './Components/crud/Create';
 import { useEffect, useState } from 'react';
+import { URL } from './Constants/crud'
 
 export default function App() {
 
@@ -13,7 +15,13 @@ export default function App() {
             return;
         }
 
-        
+        axios.post(URL, storeData)
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => {
+            console.error(error);
+        });
 
     }, [storeData])
     
