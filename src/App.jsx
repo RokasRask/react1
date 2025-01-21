@@ -1,4 +1,5 @@
 import './crud.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 import { use, useEffect, useState } from 'react';
 import axios from 'axios';
@@ -35,10 +36,19 @@ export default function App() {
         if (null === storeData) {
             return;
         }
+        const id = uuidv4();
+        setData(d => [{ id: uuidv4(), ...storeData, temp: true }, ...d]);
 
         axios.post(URL, storeData)
         .then(response => {
             console.log(response);
+            setData(d => d.map(planet => {
+                if (planet.id === id) {
+                    delete planet.temp;
+                    return { id: response.data.id, ...storeData };
+                }
+                return planet;
+            }));
         })
         .catch(error => {
             console.error(error);
