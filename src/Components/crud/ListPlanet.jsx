@@ -1,7 +1,7 @@
 import { STATES } from '../../Constants/crud';
 
 
-export default function ListPlanet({ planet }) {
+export default function ListPlanet({ planet, setEditData }) {
 
     return (
         <li className="list-group-item" style={{ backgroundColor: planet?.temp ? '#eeeeee' : '#ffffff' }}>
@@ -13,7 +13,7 @@ export default function ListPlanet({ planet }) {
                     <p>Satellites: {planet.satellites.join(', ')}</p>
                 </div>
                 <div className="planet-in-list__buttons">
-                    <button disabled={planet?.temp} className="yellow">Edit</button>
+                    <button disabled={planet?.temp} className="yellow" onClick={_ => setEditData(planet)}>Edit</button>
                     <button disabled={planet?.temp} className="red">Delete</button>
                 </div>
             </div>

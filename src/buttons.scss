@@ -88,4 +88,9 @@ button {
             background-color: darken($yellow, 5%);
         }
     }
+    &:disabled {
+        background-color: gray;
+        cursor: default;
+        opacity: .5;
+    }
 }

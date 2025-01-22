@@ -73,7 +73,38 @@ export default function App() {
 
     }, [storeData]);
 
+    useEffect(_ => {
+        if (null === updateData) {
+            return;
+        }
+        setData(d => d.map(planet => {
+            if (planet.id === updateData.id) {
+                return {...updateData, temp: true, oldData: planet}
+            }
+            return planet;
+        }))
 
+        axios.put(URL + updateData.id, updateData)
+            .then(_ => {
+                setData(d => d.map(planet => {
+                    if (planet.id === updateData.id) {
+                        delete planet.temp;
+                        delete planet.oldData;
+                    }
+                    return planet;
+                }));
+            })
+            .catch(_ => {
+                setData(d => d.map(planet => {
+                    if (planet.id === updateData.id) {
+                        return planet.oldData;
+                    }
+                    return planet;
+                }));
+                setEditData(updateData);
+            });
+
+    }, [updateData])
 
     return (
         <>
@@ -83,12 +114,12 @@ export default function App() {
                         <Create setStoreData={setStoreData} createData={createData} />
                     </div>
                     <div className="col-8">
-                        <List data={data} />
+                        <List data={data} setEditData={setEditData}/>
                     </div>
                 </div>
             </div>
             {
-                editData !== null && <Edit />
+                editData !== null && <Edit setEditData={setEditData} editData={editData} setUpdateData={setUpdateData} />
             }
         </>
     );
