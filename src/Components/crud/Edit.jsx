@@ -19,7 +19,7 @@ export default function Edit({ setEditData, editData, setUpdateData }) {
             state: editData.state,
             size: editData.size
         });
- 
+
     }, [editData]);
 
     const addSatellite = _ => {
@@ -39,7 +39,7 @@ export default function Edit({ setEditData, editData, setUpdateData }) {
             satellites,
             name: planetData.name,
             state: planetData.state,
-            size: parseFloat(planetData.size),
+            size: isNaN(parseFloat(planetData.size)) ? 0 : parseFloat(planetData.size),
             id: editData.id
         };
         setUpdateData(data);
@@ -107,7 +107,7 @@ export default function Edit({ setEditData, editData, setUpdateData }) {
                     </div>
                     <div className="modal-footer">
                         <button type="button" onClick={_ => setEditData(null)}>Close</button>
-                        <button type="button" className="blue" onClick={submitData} >Save changes</button>
+                        <button type="button" className="blue" onClick={submitData}>Save changes</button>
                     </div>
                 </div>
             </div>

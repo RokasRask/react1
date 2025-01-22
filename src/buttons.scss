@@ -5,7 +5,6 @@ $green: #80CFA9;
 $yellow: #F18F01;
 
 button {
-    margin: 10px;
     appearance: none;
     backface-visibility: hidden;
     background-color: $gray;
@@ -34,6 +33,7 @@ button {
     touch-action: manipulation;
     vertical-align: top;
     white-space: nowrap;
+    margin: 10px;
 
     &:hover {
         background-color: darken($gray, 5%);
@@ -88,9 +88,14 @@ button {
             background-color: darken($yellow, 5%);
         }
     }
+
     &:disabled {
         background-color: gray;
         cursor: default;
         opacity: .5;
+
+        &:hover {
+            background-color: gray;
+        }
     }
 }

@@ -9,6 +9,7 @@ import { URL } from './Constants/crud';
 import Create from './Components/crud/Create';
 import List from './Components/crud/List';
 import Edit from './Components/crud/Edit';
+import Delete from './Components/crud/Delete';
 
 
 export default function App() {
@@ -22,6 +23,8 @@ export default function App() {
     const [storeData, setStoreData] = useState(null);
     const [editData, setEditData] = useState(null);
     const [updateData, setUpdateData] = useState(null);
+    const [deleteData, setDeleteData] = useState(null);
+    const [destroyData, setDestroyData] = useState(null);
 
 
     useEffect(_ => {
@@ -73,18 +76,19 @@ export default function App() {
 
     }, [storeData]);
 
+
     useEffect(_ => {
         if (null === updateData) {
             return;
         }
         setData(d => d.map(planet => {
             if (planet.id === updateData.id) {
-                return {...updateData, temp: true, oldData: planet}
+                return { ...updateData, temp: true, oldData: { ...planet } };
             }
             return planet;
-        }))
+        }));
 
-        axios.put(URL + updateData.id, updateData)
+        axios.put(URL + '/' + updateData.id, updateData)
             .then(_ => {
                 setData(d => d.map(planet => {
                     if (planet.id === updateData.id) {
@@ -104,7 +108,36 @@ export default function App() {
                 setEditData(updateData);
             });
 
-    }, [updateData])
+
+    }, [updateData]);
+
+    useEffect(_ => {
+        if (null === destroyData) {
+            return;
+        }
+        setData(d => d.map(planet => {
+            if (planet.id === destroyData.id) {
+                return { ...planet, temp: true, destroy: true };
+            }
+            return planet;
+        }));
+
+        axios.delete(URL + '/' + destroyData.id)
+            .then(_ => {
+                setData(d => d.filter(planet => planet.id !== destroyData.id));
+            })
+            .catch(_ => {
+                setData(d => d.map(planet => {
+                    if (planet.id === destroyData.id) {
+                        delete planet.temp;
+                        delete planet.destroy;
+                    }
+                    return planet;
+                }));
+            });
+    }, [destroyData]);
+
+
 
     return (
         <>
@@ -114,12 +147,15 @@ export default function App() {
                         <Create setStoreData={setStoreData} createData={createData} />
                     </div>
                     <div className="col-8">
-                        <List data={data} setEditData={setEditData}/>
+                        <List data={data} setEditData={setEditData} setDeleteData={setDeleteData} />
                     </div>
                 </div>
             </div>
             {
                 editData !== null && <Edit setEditData={setEditData} editData={editData} setUpdateData={setUpdateData} />
+            }
+            {
+                deleteData !== null && <Delete setDeleteData={setDeleteData} deleteData={deleteData} setDestroyData={setDestroyData} />
             }
         </>
     );
