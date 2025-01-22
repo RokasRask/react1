@@ -1,4 +1,4 @@
-import ListPlanet from "./ListPlanet";
+import ListPlanet from './ListPlanet';
 
 export default function List({ data }) {
 
@@ -15,12 +15,13 @@ export default function List({ data }) {
 
                             <ul className="list-group list-group-flush">
                                 {
-                                    data !== null 
-                                    ?
-                                    data.map(planet => <ListPlanet key={planet.id} planet={planet} />):
-                                    <li className="list-group-item">
-                                        <h3>Planets are loading...</h3>
-                                    </li>
+                                    data !== null
+                                        ?
+                                        data.map(planet => <ListPlanet key={planet.id} planet={planet} />)
+                                        :
+                                        <li className="list-group-item">
+                                            <h3>Planets are loading...</h3>
+                                        </li>
                                 }
                             </ul>
 
