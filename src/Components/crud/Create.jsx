@@ -14,7 +14,7 @@ export default function Create({ setStoreData, createData, addMessage }) {
             return;
         }
         setSatellites(createData?.satellites ?? []);
-        setPlanetData({...createData})
+        setPlanetData({ ...createData })
     }, [createData]);
 
     const addSatellite = _ => {
@@ -30,12 +30,12 @@ export default function Create({ setStoreData, createData, addMessage }) {
     }
 
     const submitData = _ => {
-        const data = { 
+        const data = {
             satellites,
             name: planetData.name,
             state: planetData.state,
             size: isNaN(parseFloat(planetData.size)) ? 0 : parseFloat(planetData.size),
-         };
+        };
         setStoreData(data);
         setSatellites(defaultSatellites);
         setPlanetData(defaultPlanetData);
@@ -51,6 +51,16 @@ export default function Create({ setStoreData, createData, addMessage }) {
                 { type: 'danger', title: 'Invalid name', text: 'Name cannot contain numbers.' }
             );
             return;
+        }
+        // Size is a number?
+        if (name === 'size') {
+            const beforeLength = value.length;
+            value = value.replace(/[^\d\.]/g, ''); // sanitize
+            if (beforeLength !== value.length) {
+                addMessage(
+                    { type: 'danger', title: 'Invalid name', text: 'Size must be a number.' }
+                );
+            }
         }
 
         console.log(name, value);
